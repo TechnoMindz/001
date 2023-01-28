@@ -1,7 +1,6 @@
 {
     "name": "Techno Mindz Bot",
     "description": "When you going to send file on telegram channel this bot will save that in database, So you can search that easily in inline mode",
-    "logo": "https://telegra.ph/file/a2a1dac049b50dc7f8dfb.jpg",
     "stack": "container",
     "keywords": [
       "telegram",
@@ -27,7 +26,7 @@
         "BOT_USERNAME": {
             "description": "enter Bot Username Without @",
             "required": true,
-            "value": "TmOfficialRobot"
+            "value": "TmTesterbot"
         },
         "API_ID": {
             "description": "Get this value from https://my.telegram.org",
@@ -108,10 +107,15 @@
             "value": "300",
             "required": false
         },
+        "DELETE_TIME": {
+            "description": "In How Many Second You want The Bot to delete The Message - Ravinandan",
+            "required": true,
+            "value": "300"
+        },
         "IMDB": {
             "description": "Imdb, the view of information when making True/False ",
-            "required": false,
-            "value": "False"
+            "required": true,
+            "value": "True"
         },
         "SINGLE_BUTTON": {
             "description": "choose b/w single or double buttons https://github.com/EvamariaTG/EvaMaria/issues/22",
@@ -120,13 +124,8 @@
         },
         "P_TTI_SHOW_OFF": {
             "description": "Customize Result Buttons to Callback or Url by (True = url / False = callback)",
-            "required": false,
-            "value": "False"
-        },
-        "DELETE_TIME": {
-            "description": "Set Autodelete time in seconds @TmMainChannel",
-            "value": "300"
-            "required": true
+            "required": true,
+            "value": "True"
         }
     },
     "addons": [],
