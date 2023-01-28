@@ -8,7 +8,7 @@ from Script import script
 import pyrogram
 from database.connections_mdb import active_connection, all_connections, delete_connection, if_active, make_active, \
     make_inactive
-from info import ADMINS, DELETE_TIME, AUTH_CHANNEL, AUTH_USERS, CUSTOM_FILE_CAPTION, AUTH_GROUPS, P_TTI_SHOW_OFF, IMDB, \
+from info import ADMINS, AUTH_CHANNEL, AUTH_USERS, CUSTOM_FILE_CAPTION, AUTH_GROUPS, P_TTI_SHOW_OFF, IMDB, \
     SINGLE_BUTTON, SPELL_CHECK_REPLY, IMDB_TEMPLATE
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from pyrogram import Client, filters, enums
@@ -865,27 +865,44 @@ async def auto_filter(client, msg, spoll=False):
         cap = f"♨️<STRONG>{search}</STRONG>♨️\n🤖 𝗨𝗣𝗟𝗢𝗔𝗗𝗘𝗗 𝗕𝗬 ♪♪ \n✨@TechnoMoviesCollection\n⚠️𝐍𝐨𝐭𝐞:♪→𝗜𝗳 𝗬𝗼𝘂 𝗗𝗼𝗻'𝘁 𝗞𝗻𝗼𝘄 𝗛𝗼𝘄 𝗧𝗼 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱 𝗜𝘁 𝗧𝗵𝗲𝗻 𝗧𝘆𝗽𝗲 #How 𝗜𝗻 𝗧𝗵𝗲 𝗚𝗿𝗼𝘂𝗽\n\n➥ 𝗝𝗼𝗶𝗻 ➼ @TmMainChannel"
     if imdb and imdb.get('poster'):
         try:
-            fmsg = await message.reply_photo(photo=imdb.get('poster'), caption=cap[:1024],
+            ravi = await message.reply_photo(photo=imdb.get('poster'), caption=cap[:1024],
                                       reply_markup=InlineKeyboardMarkup(btn))
         except (MediaEmpty, PhotoInvalidDimensions, WebpageMediaEmpty):
             pic = imdb.get('poster')
             poster = pic.replace('.jpg', "._V1_UX360.jpg")
-            fmsg = await message.reply_photo(photo=poster, caption=cap[:1024], reply_markup=InlineKeyboardMarkup(btn))
+            ravi = await message.reply_photo(photo=poster, caption=cap[:1024], reply_markup=InlineKeyboardMarkup(btn))
         except Exception as e:
             logger.exception(e)
-            fmsg = await message.reply_text(cap, reply_markup=InlineKeyboardMarkup(btn))
-    else:
-        fmsg = await message.reply_text(cap, reply_markup=InlineKeyboardMarkup(btn))
-    
-    await asyncio.sleep(300)
-    await fmsg.delete()
-    await client.send_video(
+            ravi = await message.reply_text(cap, reply_markup=InlineKeyboardMarkup(btn))
+            await asyncio.sleep(300)
+            await ravi.delete()
+            await client.send_video(
                 chat_id=message.chat.id,
                 video="https://telegra.ph/file/0cddf1c687a0dbc256313.mp4",
                 caption=f"Hey <spoiler>{message.from_user.mention}</spoiler> ✨\nYour Filter: <code>{search}</code>\nHas been closed to avoid copyroght issue 🤧\nNo worries 🙂 you can request again here @TechnoMoviesCollection\n\nMade By @TmMainChannel 💝",
                 reply_to_message_id=message.message.id
             )
-    
+        except Exception as e:
+            logger.exception(e)
+            ravin = await message.reply_text(text=cap, disable_web_page_preview=True, reply_markup=InlineKeyboardMarkup(btn))
+            await asyncio.sleep(300)
+            await ravin.delete()
+            await client.send_video(
+                chat_id=message.chat.id,
+                video="https://telegra.ph/file/0cddf1c687a0dbc256313.mp4",
+                caption=f"Hey <spoiler>{message.from_user.mention}</spoiler> ✨\nYour Filter: <code>{search}</code>\nHas been closed to avoid copyroght issue 🤧\nNo worries 🙂 you can request again here @TechnoMoviesCollection\n\nMade By @TmMainChannel 💝",
+                reply_to_message_id=message.message.id
+            )
+    else:
+        ravina = await message.reply_text(text=cap, disable_web_page_preview=True, reply_markup=InlineKeyboardMarkup(btn))
+        await asyncio.sleep(300)
+        await ravina.delete()
+        await client.send_video(
+            chat_id=message.chat.id,
+            video="https://telegra.ph/file/0cddf1c687a0dbc256313.mp4",
+            caption=f"Hey <spoiler>{message.from_user.mention}</spoiler> ✨\nYour Filter: <code>{search}</code>\nHas been closed to avoid copyroght issue 🤧\nNo worries 🙂 you can request again here @TechnoMoviesCollection\n\nMade By @TmMainChannel 💝",
+            reply_to_message_id=message.message.id
+        )
     if spoll:
         await msg.message.delete()
 
